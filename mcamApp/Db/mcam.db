@@ -1,0 +1,71 @@
+record(bo, "$(BL):$(DEV):acquire")
+{
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bi, "$(BL):$(DEV):acquire_RBV")
+{ 
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(mbbo, "$(BL):$(DEV):mode")
+{
+  field(ZRST, "compressed")
+  field(ONST, "raw")
+}
+
+record(mbbi, "$(BL):$(DEV):mode_RBV")
+{ 
+  field(ZRST, "compressed")
+  field(ONST, "raw")
+}
+
+record(mbbo, "$(BL):$(DEV):resolution")
+{ 
+  field(ZRST, "1280x720")
+  field(ONST, "800x600")
+  field(TWST, "640x480")
+  field(THST, "320x240")
+}
+
+record(mbbi, "$(BL):$(DEV):resolution_RBV")
+{
+  field(ZRST, "1280x720")
+  field(ONST, "800x600")
+  field(TWST, "640x480")
+  field(THST, "320x240")
+}
+
+record(mbbo, "$(BL):$(DEV):fps")
+{
+  field(ZRST, "30")
+  field(ONST, "25")
+  field(TWST, "20")
+  field(THST, "15")
+  field(FRST, "5")
+}
+
+record(mbbi, "$(BL):$(DEV):fps_RBV")
+{
+  field(ZRST, "30")
+  field(ONST, "25")
+  field(TWST, "20")
+  field(THST, "15")
+  field(FRST, "5")
+}
+
+record(ai, "$(BL):$(DEV):img_x")
+{
+}
+
+record(ai, "$(BL):$(DEV):img_y")
+{ 
+}
+
+record(waveform, "$(BL):$(DEV):img")
+{
+  field(FTVL, "UCHAR")
+  field(NELM, "921600")
+}

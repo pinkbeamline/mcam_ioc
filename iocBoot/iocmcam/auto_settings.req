@@ -1,0 +1,4 @@
+$(BL):$(DEV):mode
+$(BL):$(DEV):resolution
+$(BL):$(DEV):fps
+
