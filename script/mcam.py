@@ -11,6 +11,8 @@ import psutil
 
 global pv_imgout
 global pv_frameid
+global pv_acquire
+global pv_acquire_stream
 global jpgframe
 global jpgframeid
 
@@ -53,11 +55,13 @@ pv_mode = epics.PV("PINK:MCAM:mode", auto_monitor=True)
 pv_resolution = epics.PV("PINK:MCAM:resolution", auto_monitor=True)
 pv_fps = epics.PV("PINK:MCAM:fps", auto_monitor=True)
 pv_acquire = epics.PV("PINK:MCAM:acquire", auto_monitor=True)
+pv_acquire_stream = epics.PV("PINK:MCAM:acquire_stream", auto_monitor=True)
 
 pv_imgout = epics.PV("PINK:MCAM:img", auto_monitor=False)
 pv_dimx = epics.PV("PINK:MCAM:img_x", auto_monitor=False)
 pv_dimy = epics.PV("PINK:MCAM:img_y", auto_monitor=False)
 pv_acquire_rbv = epics.PV("PINK:MCAM:acquire_RBV", auto_monitor=False)
+pv_acquire_stream_rbv = epics.PV("PINK:MCAM:acquire_stream_RBV", auto_monitor=False)
 pv_mode_rbv = epics.PV("PINK:MCAM:mode_RBV", auto_monitor=False)
 pv_resolution_rbv = epics.PV("PINK:MCAM:resolution_RBV", auto_monitor=False)
 pv_fps_rbv = epics.PV("PINK:MCAM:fps_RBV", auto_monitor=False)
@@ -73,13 +77,14 @@ print("Setup video capture")
 cam = cv2.VideoCapture(DEV_ID)
 cam.set(cv2.CAP_PROP_CONVERT_RGB, True)
 
-
 ## main stream handler
 def receiver():
     global rawframe
     global rawframeid
     global cam
     global acquire
+    global pv_acquire
+    global pv_acquire_stream
     rawframe=[[],[]]
     rawframeid=0
     raw=0
@@ -87,7 +92,7 @@ def receiver():
     time.sleep(5)
     print("Receiver thread running. OK")
     while(True):
-        if(acquire):
+        if( (int(pv_acquire.value))or(int(pv_acquire_stream.value)) ):
             ret, raw=cam.read()
             if ret:
                 rawframe[(rawframeid+1)%2]=raw
@@ -102,19 +107,21 @@ def epics_sender():
     global rawframeid
     global pv_imgout
     global pv_frameid
+    global pv_acquire
     id=0
     counter=0
     time.sleep(5)
     print("EPICS sender thread is running. OK")
     while(True):
-        if(id!=rawframeid):
-            id=rawframeid
-            buf=rawframe[id%2]
-            gray = cv2.cvtColor(buf, cv2.COLOR_RGB2GRAY)
-            wave = np.reshape(gray, -1)
-            pv_imgout.put(wave)
-            counter=(counter+1)%1000000
-            pv_frameid.put(counter)
+        if(int(pv_acquire.value)):
+            if(id!=rawframeid):
+                id=rawframeid
+                buf=rawframe[id%2]
+                gray = cv2.cvtColor(buf, cv2.COLOR_RGB2GRAY)
+                wave = np.reshape(gray, -1)
+                pv_imgout.put(wave)
+                counter=(counter+1)%1000000
+                pv_frameid.put(counter)
         time.sleep(1)
 
 def jcompressor():
@@ -122,17 +129,19 @@ def jcompressor():
     global rawframeid
     global jpgframe
     global jpgframeid
+    global pv_acquire_stream
     id=0
     parameters = [cv2.IMWRITE_JPEG_QUALITY, 90]
     time.sleep(5)
     print("JPG compressor thread is running. OK")
     while(True):
-        if(id != rawframeid):
-            id=rawframeid
-            raw=rawframe[id%2]
-            buf=cv2.cvtColor(raw, cv2.COLOR_RGB2GRAY)
-            result, jpgframe = cv2.imencode('.jpg', buf, parameters)
-            jpgframeid=id
+        if(int(pv_acquire_stream.value)):
+            if(id != rawframeid):
+                id=rawframeid
+                raw=rawframe[id%2]
+                buf=cv2.cvtColor(raw, cv2.COLOR_RGB2GRAY)
+                result, jpgframe = cv2.imencode('.jpg', buf, parameters)
+                jpgframeid=id
         else:
             time.sleep(0.01)
 
@@ -259,9 +268,10 @@ while(True):
             pv_fps_rbv.put(4)
 
     ## acquire
-    if(acquire != int(pv_acquire.value)):
-        acquire=int(pv_acquire.value)
-        pv_acquire_rbv.put(acquire)
+    #if(acquire != int(pv_acquire.value)):
+    #    acquire=int(pv_acquire.value)
+    #    pv_acquire_rbv.put(acquire)
+
 
     ## stats
     loopid=(loopid+1)%1000
@@ -292,6 +302,5 @@ while(True):
         except:
             pass
     time.sleep(0.5)
-
 
 print("OK")

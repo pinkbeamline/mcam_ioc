@@ -10,6 +10,18 @@ record(bi, "$(BL):$(DEV):acquire_RBV")
   field(ONAM, "On")
 }
 
+record(bo, "$(BL):$(DEV):acquire_stream")
+{
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
+record(bi, "$(BL):$(DEV):acquire_stream_RBV")
+{
+  field(ZNAM, "Off")
+  field(ONAM, "On")
+}
+
 record(mbbo, "$(BL):$(DEV):mode")
 {
   field(ZRST, "compressed")
