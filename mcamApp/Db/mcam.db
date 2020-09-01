@@ -69,3 +69,32 @@ record(waveform, "$(BL):$(DEV):img")
   field(FTVL, "UCHAR")
   field(NELM, "921600")
 }
+
+record(ai, "$(BL):$(DEV):frameid")
+{
+}
+
+record(ai, "$(BL):$(DEV):cputemp")
+{
+  field(EGU, "C") 
+  field(PREC, "1")
+}
+
+record(ai, "$(BL):$(DEV):cpuusage")
+{
+  field(EGU, "%")
+  field(PREC, "1")
+}
+
+
+record(ai, "$(BL):$(DEV):netup")
+{
+  field(EGU, "Mbps")
+  field(PREC, "3")
+}
+
+record(ai, "$(BL):$(DEV):netdl")
+{
+  field(EGU, "Mbps")
+  field(PREC, "3")
+}

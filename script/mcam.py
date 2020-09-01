@@ -7,8 +7,10 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
 import threading
 import epics
+import psutil
 
 global pv_imgout
+global pv_frameid
 
 ## Device Video
 DEV_ID = 0
@@ -27,6 +29,11 @@ pv_acquire_rbv = epics.PV("PINK:MCAM:acquire_RBV", auto_monitor=False)
 pv_mode_rbv = epics.PV("PINK:MCAM:mode_RBV", auto_monitor=False)
 pv_resolution_rbv = epics.PV("PINK:MCAM:resolution_RBV", auto_monitor=False)
 pv_fps_rbv = epics.PV("PINK:MCAM:fps_RBV", auto_monitor=False)
+pv_frameid = epics.PV("PINK:MCAM:frameid", auto_monitor=False)
+pv_cputemp = epics.PV("PINK:MCAM:cputemp", auto_monitor=False)
+pv_cpuusage = epics.PV("PINK:MCAM:cpuusage", auto_monitor=False)
+pv_netup = epics.PV("PINK:MCAM:netup", auto_monitor=False)
+pv_netdl = epics.PV("PINK:MCAM:netdl", auto_monitor=False)
 
 ## camera instant
 global cam
@@ -62,7 +69,9 @@ def epics_sender():
     global rawframe
     global rawframeid
     global pv_imgout
+    global pv_frameid
     id=0
+    counter=0
     time.sleep(5)
     print("EPICS sender thread is running. OK")
     while(True):
@@ -72,6 +81,8 @@ def epics_sender():
             gray = cv2.cvtColor(buf, cv2.COLOR_RGB2GRAY)
             wave = np.reshape(gray, -1)
             pv_imgout.put(wave)
+            counter=(counter+1)%1000000
+            pv_frameid.put(counter)
         time.sleep(1)
 
 ## start threads
@@ -91,6 +102,13 @@ fps=-1
 acquire=0
 dimx=0
 dimy=0
+loopid=0
+cputemp=0
+cpuusage=0
+tnow=1
+tpast=0
+pastnetsent=0
+pastnetrecv=0
 
 print("\n*** MCAM script running... *** ")
 while(True):
@@ -188,6 +206,34 @@ while(True):
         acquire=int(pv_acquire.value)
         pv_acquire_rbv.put(acquire)
 
+    ## stats
+    loopid=(loopid+1)%1000
+    if(loopid%4==0):
+        try:
+            with open('/sys/class/thermal/thermal_zone0/temp','r') as f:
+                cputemp = float(f.read())/1000
+            cpuusage=psutil.cpu_percent()
+
+            pv_cputemp.put(cputemp)
+            pv_cpuusage.put(cpuusage)
+
+            tnow=time.time()
+            netstat=psutil.net_io_counters(pernic=True)
+
+            dt = tnow-tpast
+            tpast=tnow
+
+            netup = ((netstat['eth0'].bytes_sent-pastnetsent)/dt)*(8e-6)
+            netdl = ((netstat['eth0'].bytes_recv-pastnetrecv)/dt)*(8e-6)
+
+            pastnetsent=netstat['eth0'].bytes_sent
+            pastnetrecv=netstat['eth0'].bytes_recv
+
+            pv_netup.put(netup)
+            pv_netdl.put(netdl)
+
+        except:
+            pass
     time.sleep(0.5)
 
 
