@@ -11,9 +11,41 @@ import psutil
 
 global pv_imgout
 global pv_frameid
+global jpgframe
+global jpgframeid
 
 ## Device Video
 DEV_ID = 0
+
+class Handler(BaseHTTPRequestHandler):
+
+    def do_GET(self):
+        global jpgframe
+        global jpgframeid
+        id = 0
+        self.send_response(200)
+        self.send_header('Content-type', 'multipart/x-mixed-replace; boundary=--jpgboundary')
+        self.end_headers()
+        #message =  threading.currentThread().getName()
+        try:
+            while(True):
+                if id != jpgframeid:
+                    id=jpgframeid
+                    buf = bytearray(jpgframe)
+                    length = len(jpgframe)
+                    self.wfile.write("--jpgboundary\r\n".encode("utf-8"))
+                    self.send_header('Content-type', 'image/jpeg')
+                    self.send_header('Content-length', str(length))
+                    self.end_headers()
+                    self.wfile.write(buf)
+                else:
+                    time.sleep(0.01)
+        except:
+            pass
+        return
+
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+    """Handle requests in a separate thread."""
 
 ## Setup epics PVs
 print("Setup PVs")
@@ -85,13 +117,38 @@ def epics_sender():
             pv_frameid.put(counter)
         time.sleep(1)
 
+def jcompressor():
+    global rawframe
+    global rawframeid
+    global jpgframe
+    global jpgframeid
+    id=0
+    parameters = [cv2.IMWRITE_JPEG_QUALITY, 90]
+    time.sleep(5)
+    print("JPG compressor thread is running. OK")
+    while(True):
+        if(id != rawframeid):
+            id=rawframeid
+            raw=rawframe[id%2]
+            buf=cv2.cvtColor(raw, cv2.COLOR_RGB2GRAY)
+            result, jpgframe = cv2.imencode('.jpg', buf, parameters)
+            jpgframeid=id
+        else:
+            time.sleep(0.01)
+
 ## start threads
 main_receiver = threading.Thread(target=receiver,args=())
 epics_sync = threading.Thread(target=epics_sender,args=())
+img_compressor = threading.Thread(target=jcompressor,args=())
+
+webhandler = ThreadedHTTPServer(('pink-rpi04.local', 8080), Handler)
+webserver = threading.Thread(target=webhandler.serve_forever,args=())
 
 print("Starting threads...")
 main_receiver.start()
 epics_sync.start()
+img_compressor.start()
+webserver.start()
 
 ## main loop
 global acquire
