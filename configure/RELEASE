@@ -26,7 +26,7 @@
 #MODULES = /path/to/modules
 #MYMODULE = $(MODULES)/my-module
 
-SUPPORT=/home/pi/EPICS/support
+SUPPORT=/home/epics/EPICS/support
 
 AUTOSAVE=$(SUPPORT)/autosave-R5-10-1
 
@@ -34,7 +34,7 @@ AUTOSAVE=$(SUPPORT)/autosave-R5-10-1
 #SNCSEQ = $(MODULES)/seq-ver
 
 # EPICS_BASE should appear last so earlier modules can override stuff:
-EPICS_BASE = /home/pi/EPICS/base
+EPICS_BASE=/home/epics/EPICS/base
 
 # Set RULES here if you want to use build rules from somewhere
 # other than EPICS_BASE:

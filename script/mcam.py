@@ -34,7 +34,7 @@ class Handler(BaseHTTPRequestHandler):
                 if id != jpgframeid:
                     id=jpgframeid
                     buf = bytearray(jpgframe)
-                    length = len(jpgframe)
+                    length = len(buf)
                     self.wfile.write("--jpgboundary\r\n".encode("utf-8"))
                     self.send_header('Content-type', 'image/jpeg')
                     self.send_header('Content-length', str(length))
@@ -139,8 +139,8 @@ def jcompressor():
             if(id != rawframeid):
                 id=rawframeid
                 raw=rawframe[id%2]
-                buf=cv2.cvtColor(raw, cv2.COLOR_RGB2GRAY)
-                result, jpgframe = cv2.imencode('.jpg', buf, parameters)
+                #buf=cv2.cvtColor(raw, cv2.COLOR_RGB2GRAY)
+                result, jpgframe = cv2.imencode('.jpg', raw, parameters)
                 jpgframeid=id
         else:
             time.sleep(0.01)
@@ -150,7 +150,7 @@ main_receiver = threading.Thread(target=receiver,args=())
 epics_sync = threading.Thread(target=epics_sender,args=())
 img_compressor = threading.Thread(target=jcompressor,args=())
 
-webhandler = ThreadedHTTPServer(('pink-rpi04.local', 8080), Handler)
+webhandler = ThreadedHTTPServer(('', 8080), Handler)
 webserver = threading.Thread(target=webhandler.serve_forever,args=())
 
 print("Starting threads...")

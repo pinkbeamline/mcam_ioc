@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display version="2.0.0">
+  <name>MCAM</name>
+  <macros>
+    <BL>PINK</BL>
+    <DEV>MCAM</DEV>
+  </macros>
+  <width>1750</width>
+  <height>800</height>
+  <widget type="group" version="2.0.0">
+    <name>MCAM</name>
+    <width>400</width>
+    <height>490</height>
+    <foreground_color>
+      <color red="0" green="149" blue="255">
+      </color>
+    </foreground_color>
+    <widget type="led" version="2.0.0">
+      <name>LED</name>
+      <pv_name>$(BL):$(DEV):acquire</pv_name>
+      <x>322</x>
+      <y>62</y>
+      <width>30</width>
+      <height>30</height>
+      <square>true</square>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Action Button_1</name>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>0</value>
+          <description>Write PV</description>
+        </action>
+      </actions>
+      <pv_name>$(BL):$(DEV):acquire</pv_name>
+      <text>Stop</text>
+      <x>102</x>
+      <y>62</y>
+      <width>120</width>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Mode:</text>
+      <x>12</x>
+      <y>152</y>
+      <width>80</width>
+      <height>30</height>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_1</name>
+      <text>Resolution:</text>
+      <x>12</x>
+      <y>192</y>
+      <width>80</width>
+      <height>30</height>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_2</name>
+      <text>Rate:</text>
+      <x>12</x>
+      <y>232</y>
+      <width>80</width>
+      <height>30</height>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_3</name>
+      <text>Size:</text>
+      <x>12</x>
+      <y>292</y>
+      <width>80</width>
+      <height>30</height>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="combo" version="2.0.0">
+      <name>Combo Box</name>
+      <pv_name>$(BL):$(DEV):mode</pv_name>
+      <x>102</x>
+      <y>152</y>
+      <width>120</width>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update</name>
+      <pv_name>$(BL):$(DEV):mode_RBV</pv_name>
+      <x>232</x>
+      <y>152</y>
+      <width>120</width>
+      <height>30</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="combo" version="2.0.0">
+      <name>Combo Box_1</name>
+      <pv_name>$(BL):$(DEV):resolution</pv_name>
+      <x>102</x>
+      <y>192</y>
+      <width>120</width>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_1</name>
+      <pv_name>$(BL):$(DEV):resolution_RBV</pv_name>
+      <x>232</x>
+      <y>192</y>
+      <width>120</width>
+      <height>30</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Action Button</name>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <description>Write PV</description>
+        </action>
+      </actions>
+      <pv_name>$(BL):$(DEV):acquire</pv_name>
+      <text>Start</text>
+      <x>232</x>
+      <y>62</y>
+      <width>80</width>
+    </widget>
+    <widget type="combo" version="2.0.0">
+      <name>Combo Box_2</name>
+      <pv_name>$(BL):$(DEV):fps</pv_name>
+      <x>102</x>
+      <y>232</y>
+      <width>120</width>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_2</name>
+      <pv_name>$(BL):$(DEV):fps_RBV</pv_name>
+      <x>232</x>
+      <y>232</y>
+      <width>120</width>
+      <height>30</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_3</name>
+      <pv_name>$(BL):$(DEV):img_x</pv_name>
+      <x>102</x>
+      <y>292</y>
+      <width>120</width>
+      <height>30</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_4</name>
+      <pv_name>$(BL):$(DEV):img_y</pv_name>
+      <x>232</x>
+      <y>292</y>
+      <width>120</width>
+      <height>30</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_5</name>
+      <text>X</text>
+      <x>102</x>
+      <y>272</y>
+      <width>120</width>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_6</name>
+      <text>Y</text>
+      <x>232</x>
+      <y>272</y>
+      <width>120</width>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_7</name>
+      <text>Frame ID:</text>
+      <x>12</x>
+      <y>112</y>
+      <width>80</width>
+      <height>30</height>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_5</name>
+      <pv_name>$(BL):$(DEV):frameid</pv_name>
+      <x>232</x>
+      <y>112</y>
+      <width>120</width>
+      <height>30</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_8</name>
+      <text>Network:</text>
+      <x>12</x>
+      <y>352</y>
+      <width>80</width>
+      <height>30</height>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_9</name>
+      <text>RX</text>
+      <x>102</x>
+      <y>332</y>
+      <width>120</width>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_10</name>
+      <text>TX</text>
+      <x>232</x>
+      <y>332</y>
+      <width>120</width>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_6</name>
+      <pv_name>$(BL):$(DEV):netdl</pv_name>
+      <x>102</x>
+      <y>352</y>
+      <width>120</width>
+      <height>30</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_7</name>
+      <pv_name>$(BL):$(DEV):netup</pv_name>
+      <x>232</x>
+      <y>352</y>
+      <width>120</width>
+      <height>30</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_11</name>
+      <text>CPU:</text>
+      <x>12</x>
+      <y>412</y>
+      <width>80</width>
+      <height>30</height>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_8</name>
+      <pv_name>$(BL):$(DEV):cputemp</pv_name>
+      <x>102</x>
+      <y>412</y>
+      <width>120</width>
+      <height>30</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_9</name>
+      <pv_name>$(BL):$(DEV):cpuusage</pv_name>
+      <x>232</x>
+      <y>412</y>
+      <width>120</width>
+      <height>30</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_12</name>
+      <text>Temp</text>
+      <x>102</x>
+      <y>392</y>
+      <width>120</width>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_13</name>
+      <text>Usage</text>
+      <x>232</x>
+      <y>392</y>
+      <width>120</width>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_14</name>
+      <text>EPICS:</text>
+      <x>12</x>
+      <y>62</y>
+      <width>80</width>
+      <height>30</height>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_16</name>
+      <text>Stream:</text>
+      <x>12</x>
+      <y>12</y>
+      <width>80</width>
+      <height>30</height>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Action Button_3</name>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>0</value>
+          <description>Write PV</description>
+        </action>
+      </actions>
+      <pv_name>$(BL):$(DEV):acquire_stream</pv_name>
+      <text>Stop</text>
+      <x>102</x>
+      <y>12</y>
+      <width>120</width>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Action Button_4</name>
+      <actions>
+        <action type="write_pv">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <description>Write PV</description>
+        </action>
+      </actions>
+      <pv_name>$(BL):$(DEV):acquire_stream</pv_name>
+      <text>Start</text>
+      <x>232</x>
+      <y>12</y>
+      <width>80</width>
+    </widget>
+    <widget type="led" version="2.0.0">
+      <name>LED_1</name>
+      <pv_name>$(BL):$(DEV):acquire_stream</pv_name>
+      <x>322</x>
+      <y>12</y>
+      <width>30</width>
+      <height>30</height>
+      <square>true</square>
+    </widget>
+  </widget>
+  <widget type="image" version="2.0.0">
+    <name>Image</name>
+    <pv_name>$(BL):$(DEV):img</pv_name>
+    <x>410</x>
+    <y>10</y>
+    <width>1280</width>
+    <height>720</height>
+    <color_map>
+      <name>GRAY</name>
+    </color_map>
+    <x_axis>
+      <visible>true</visible>
+      <title>X</title>
+      <minimum>1.0</minimum>
+      <maximum>100.0</maximum>
+      <title_font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </x_axis>
+    <y_axis>
+      <visible>true</visible>
+      <title>Y</title>
+      <minimum>1.0</minimum>
+      <maximum>100.0</maximum>
+      <title_font>
+        <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </title_font>
+      <scale_font>
+        <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+        </font>
+      </scale_font>
+    </y_axis>
+    <rules>
+      <rule name="dim_x" prop_id="data_width" out_exp="true">
+        <exp bool_exp="True">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(BL):$(DEV):img_x</pv_name>
+      </rule>
+      <rule name="dim_y" prop_id="data_height" out_exp="true">
+        <exp bool_exp="True">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(BL):$(DEV):img_y</pv_name>
+      </rule>
+      <rule name="xsize" prop_id="width" out_exp="true">
+        <exp bool_exp="True">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(BL):$(DEV):img_x</pv_name>
+      </rule>
+      <rule name="ysize" prop_id="height" out_exp="true">
+        <exp bool_exp="True">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(BL):$(DEV):img_y</pv_name>
+      </rule>
+      <rule name="x_max" prop_id="x_axis.maximum" out_exp="true">
+        <exp bool_exp="True">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(BL):$(DEV):img_x</pv_name>
+      </rule>
+      <rule name="y_max" prop_id="y_axis.maximum" out_exp="true">
+        <exp bool_exp="True">
+          <expression>pv0</expression>
+        </exp>
+        <pv_name>$(BL):$(DEV):img_y</pv_name>
+      </rule>
+    </rules>
+    <tooltip></tooltip>
+    <color_mode>21</color_mode>
+    <unsigned>true</unsigned>
+  </widget>
+</display>
