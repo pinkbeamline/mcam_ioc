@@ -36,36 +36,41 @@ record(mbbi, "$(BL):$(DEV):mode_RBV")
 
 record(mbbo, "$(BL):$(DEV):resolution")
 { 
-  field(ZRST, "1280x720")
-  field(ONST, "800x600")
-  field(TWST, "640x480")
-  field(THST, "320x240")
+  field(ZRST, "2592x1944")
+  field(ONST, "2048x1536")
+  field(TWST, "1920x1080")
+  field(THST, "1600x1200")
+  field(FRST, "1280x960")
+  field(FVST, "1280x720")
+  field(SXST, "1020x768")
+  field(SVST, "640x480")
+  field(EIST, "320x240")
 }
 
 record(mbbi, "$(BL):$(DEV):resolution_RBV")
 {
-  field(ZRST, "1280x720")
-  field(ONST, "800x600")
-  field(TWST, "640x480")
-  field(THST, "320x240")
+  field(ZRST, "2592x1944")
+  field(ONST, "2048x1536")
+  field(TWST, "1920x1080")
+  field(THST, "1600x1200")
+  field(FRST, "1280x960")
+  field(FVST, "1280x720")
+  field(SXST, "1020x768")
+  field(SVST, "640x480")
+  field(EIST, "320x240")
 }
 
 record(mbbo, "$(BL):$(DEV):fps")
 {
   field(ZRST, "30")
-  field(ONST, "25")
-  field(TWST, "20")
-  field(THST, "15")
-  field(FRST, "5")
+  field(ONST, "15")
+  field(TWST, "7,5")
+  field(THST, "3")
 }
 
-record(mbbi, "$(BL):$(DEV):fps_RBV")
+record(ai, "$(BL):$(DEV):fps_RBV")
 {
-  field(ZRST, "30")
-  field(ONST, "25")
-  field(TWST, "20")
-  field(THST, "15")
-  field(FRST, "5")
+  field(PREC, "0")
 }
 
 record(ai, "$(BL):$(DEV):img_x")
@@ -79,7 +84,7 @@ record(ai, "$(BL):$(DEV):img_y")
 record(waveform, "$(BL):$(DEV):img")
 {
   field(FTVL, "UCHAR")
-  field(NELM, "921600")
+  field(NELM, "5038848")
 }
 
 record(ai, "$(BL):$(DEV):frameid")
@@ -109,4 +114,8 @@ record(ai, "$(BL):$(DEV):netdl")
 {
   field(EGU, "Mbps")
   field(PREC, "3")
+}
+
+record(stringout, "$(BL):$(DEV):status")
+{
 }

@@ -5,7 +5,7 @@
 
 < envPaths
 
-epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES", "1000000")
+epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES", "5040000")
 
 cd "${TOP}"
 
